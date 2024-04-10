@@ -1,0 +1,94 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:Project.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Project.Views.MainView"
+             x:DataType="vm:MainViewModel">
+  <Design.DataContext>
+    <vm:MainViewModel />
+  </Design.DataContext>
+
+  <Grid Background="#222436">
+      
+      <Grid.Styles>
+          <StyleInclude Source="../Styles/TextBox.axaml"/>
+      </Grid.Styles>
+      
+      <Grid.RowDefinitions>
+          <RowDefinition Height="0.7*"/>
+          <RowDefinition/>
+      </Grid.RowDefinitions>
+      
+      <Grid Grid.Row="0" Name="GridNotification">
+          
+          <Grid.Styles>
+            <Style Selector="TextBox.Notification">
+                <Setter Property="Background" Value="#141620"/>
+                <Setter Property="CornerRadius" Value="10"/>
+                <Setter Property="VerticalAlignment" Value="Top"/>
+                <Setter Property="HorizontalAlignment" Value="Right"/>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="IsReadOnly" Value="True"/>
+                <Setter Property="Margin" Value="0,10,15,0"/>
+                
+                <Style.Animations>
+                    <Animation Duration="0:0:0.5"> 
+                        <KeyFrame Cue="0%">
+                            <Setter Property="Margin" Value="0,10,-100,0"/>
+                        </KeyFrame>
+                        <KeyFrame Cue="100%">
+                            <Setter Property="Margin" Value="0,10,15,0"/>
+                        </KeyFrame>
+                    </Animation>
+                </Style.Animations>
+                
+            </Style>
+          </Grid.Styles>
+
+          <TextBox VerticalAlignment="Bottom"
+                   HorizontalAlignment="Right"
+                   Margin="0,0,15,10"
+                   CornerRadius="10"
+                   Width="200"
+                   Watermark="Ключ"
+                   BorderThickness="0"
+                   Name="KeyTextBox"
+                   TextChanged="TextBoxes_OnTextChanged"/>
+          
+          <ProgressBar HorizontalAlignment="Stretch"
+                       VerticalAlignment="Bottom"
+                       Margin="15,0,15,0"
+                       Height="5" Background="#141620"
+                       Name="ProgressBar"
+                       Minimum="0" Maximum="1" Value="0"/>
+          
+      </Grid>
+      
+      <Grid Grid.Row="1">
+          
+          <Grid.ColumnDefinitions>
+              <ColumnDefinition/>
+              <ColumnDefinition/>
+          </Grid.ColumnDefinitions>
+          
+          <Grid.Styles>
+              <Styles>
+                  <Style Selector="TextBox">
+                      <Setter Property="BorderThickness" Value="0"/>
+                      <Setter Property="Margin" Value="15"/>
+                      <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                      <Setter Property="VerticalAlignment" Value="Stretch"/>
+                      <Setter Property="CornerRadius" Value="10"/>
+                      <Setter Property="Foreground" Value="White"></Setter>
+                  </Style>
+              </Styles>
+          </Grid.Styles>
+          
+          <TextBox Grid.Column="0" Name="InputTextBox" Watermark="Ввод" TextChanged="TextBoxes_OnTextChanged"/>
+          
+          <TextBox Grid.Column="1" Name="OutputTextBox" Watermark="Вывод" IsReadOnly="True"/>
+      </Grid>
+  </Grid>
+</UserControl>
