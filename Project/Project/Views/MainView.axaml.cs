@@ -56,9 +56,9 @@ public partial class MainView : UserControl
             
             var newFile = File.Create($"{Path.GetDirectoryName(path)}/" +
                                       $"{Path.GetFileNameWithoutExtension(path)}1{Path.GetExtension(path)}");
-        
-            byte[] buffer = new byte[4096];
+
             int bytesRead;
+            byte[] buffer = new byte[4096];
         
             while ((bytesRead = file.Read(buffer, 0, buffer.Length)) > 0)
             {
@@ -73,6 +73,11 @@ public partial class MainView : UserControl
             SendNotification("Файл готов!");
         });
     }
+
+    private bool XOR(bool a, bool b)
+    {
+        return a == b ? false : true;
+    }
     
     private byte[] EncodeDecodeBytes(byte[] input, string key)
     {
@@ -82,22 +87,14 @@ public partial class MainView : UserControl
         BitArray answer = new BitArray(inputBits.Length);
 
         int y = 0;
-        for (int x = 0; x < inputBits.Length; x++)
+        for (int x = 0; x < inputBits.Length; x++,y++)
         {
             if (y == keyBits.Length)
                 y = 0;
 
-            if (inputBits[x] == keyBits[y])
-            {
-                answer[x] = false;
-            }
-            else
-            {
-                answer[x] = true;
-            }
-
-            y++;
+            answer[x] = XOR(inputBits[x], keyBits[y]);
         }
+
         byte[] byteArray = new byte[(answer.Length + 7) / 8];
 
         answer.CopyTo(byteArray, 0);
